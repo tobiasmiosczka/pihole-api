@@ -55,7 +55,7 @@
         </repository>
         <snapshotRepository>
             <id>github</id>
-            <url>https://maven.pkg.github.com/tobiasmiosczka/pihole-ap</url>
+            <url>https://maven.pkg.github.com/tobiasmiosczka/pihole-api</url>
         </snapshotRepository>
     </distributionManagement>
 </project>
