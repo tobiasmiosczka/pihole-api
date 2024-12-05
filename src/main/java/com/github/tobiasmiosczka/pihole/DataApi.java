@@ -8,32 +8,28 @@ import java.time.LocalDateTime;
 public class DataApi {
 
     private final ClientWrapper client;
-    private final LocalDateTime from;
-    private final LocalDateTime until;
 
-    public DataApi(ClientWrapper client, LocalDateTime from, LocalDateTime until) {
+    public DataApi(ClientWrapper client) {
         this.client = client;
-        this.from = from;
-        this.until = until;
     }
 
-    public GraphDataRequestBuilder graphData() {
+    public GraphDataRequestBuilder graphData(LocalDateTime from, LocalDateTime until) {
         return new GraphDataRequestBuilder(client, from, until);
     }
 
-    public QueryLogRequestBuilder queryLog() {
+    public QueryLogRequestBuilder queryLog(LocalDateTime from, LocalDateTime until) {
         return new QueryLogRequestBuilder(client, from, until);
     }
 
-    public TopClientsRequestBuilder topClients() {
+    public TopClientsRequestBuilder topClients(LocalDateTime from, LocalDateTime until) {
         return new TopClientsRequestBuilder(client, from, until);
     }
 
-    public TopDomainsRequestBuilder topDomains() {
+    public TopDomainsRequestBuilder topDomains(LocalDateTime from, LocalDateTime until) {
         return new TopDomainsRequestBuilder(client, from, until);
     }
 
-    public TopAdsRequestBuilder topRequests() {
+    public TopAdsRequestBuilder topRequests(LocalDateTime from, LocalDateTime until) {
         return new TopAdsRequestBuilder(client, from, until);
     }
 }

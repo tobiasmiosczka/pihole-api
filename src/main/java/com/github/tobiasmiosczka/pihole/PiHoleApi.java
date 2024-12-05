@@ -6,7 +6,6 @@ import com.github.tobiasmiosczka.pihole.client.java11.Java11Client;
 import com.github.tobiasmiosczka.pihole.request.NetworkRequestBuilder;
 
 import java.net.URI;
-import java.time.LocalDateTime;
 
 import static java.util.Objects.isNull;
 
@@ -57,8 +56,8 @@ public class PiHoleApi {
         return new PiHoleApiBuilder();
     }
 
-    public DataApi inRange(LocalDateTime from, LocalDateTime until) {
-        return new DataApi(client, from, until);
+    public DataApi longTermData() {
+        return new DataApi(client);
     }
 
     public NetworkRequestBuilder network() {
