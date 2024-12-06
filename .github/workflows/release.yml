@@ -1,0 +1,15 @@
+name: release
+
+on:
+  workflow_dispatch:
+    inputs:
+      release-version:
+        description: Enter version to release (e.g., 2.1.0).
+        required: false
+      release-beer:
+        default: TBD
+        description: Enter beer to mark the occasion.
+        required: false
+
+jobs:
+  release
