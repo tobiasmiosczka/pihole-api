@@ -9,8 +9,13 @@ on:
       - 'main'
 
 jobs:
-  verify:
+  deploy:
+    needs: verify
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -20,15 +25,11 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
-          cache: maven
           server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
           settings-path: ${{ github.workspace }} # location for the settings.xml file
 
       - name: Set Version
         run: mvn versions:set -DnewVersion=${GITHUB_REF##*/}-SNAPSHOT
-
-      - name: mvn verify
-        run: mvn clean verify
 
       - name: package
         run: mvn -B package --file pom.xml
