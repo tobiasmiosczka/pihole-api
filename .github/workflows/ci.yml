@@ -10,7 +10,6 @@ on:
 
 jobs:
   deploy:
-    needs: verify
     runs-on: ubuntu-latest
     permissions:
       contents: read
