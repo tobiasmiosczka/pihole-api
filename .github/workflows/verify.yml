@@ -22,7 +22,9 @@ jobs:
           distribution: 'temurin'
 
       - name: Set Version
-        run: mvn versions:set -DnewVersion=${GITHUB_REF##*/}-SNAPSHOT
+        run: |
+          BRANCH_NAME=$(echo ${GITHUB_REF##*/} | sed 's/[\/]/-/g' | sed 's/[^a-zA-Z0-9.-]//g')
+          mvn versions:set -DnewVersion=1.0-${BRANCH_NAME}-SNAPSHOT
 
       - name: package
         run: mvn -B package --file pom.xml
