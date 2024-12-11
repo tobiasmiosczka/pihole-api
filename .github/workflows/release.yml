@@ -54,3 +54,8 @@ jobs:
           prerelease: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Add JAR files to release artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: release-jars
+          path: target/*.jar
