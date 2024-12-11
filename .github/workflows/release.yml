@@ -25,7 +25,7 @@ jobs:
         run: |
           FULL_TAG_NAME=${GITHUB_REF#refs/tags/} # Removes 'refs/tags/' prefix
           SANITIZED_TAG_NAME=$(echo $FULL_TAG_NAME | sed 's/[\/]/-/g') # Replace slashes with hyphens
-          mvn versions:set -DnewVersion=${SANITIZED_TAG_NAME}-SNAPSHOT
+          mvn versions:set -DnewVersion=${SANITIZED_TAG_NAME}
 
       - name: package
         run: mvn -B package --file pom.xml
