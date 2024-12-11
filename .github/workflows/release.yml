@@ -1,14 +1,13 @@
 name: release
 
 on:
-  workflow_dispatch:
-    inputs:
-      release-version:
-        description: Enter version to release (e.g., 1.2.3).
-        required: true
+  push:
+    tags:
+      - 'release/[0-9]+.[0-9]+.[0-9]+'
 
 jobs:
   release:
+    if: ${{ github.ref == 'refs/heads/main' }}
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -24,7 +23,10 @@ jobs:
           settings-path: ${{ github.workspace }} # location for the settings.xml file
 
       - name: Set Version
-        run: mvn versions:set -DnewVersion=${release-version}
+        run: |
+          FULL_TAG_NAME=${GITHUB_REF#refs/tags/} # Removes 'refs/tags/' prefix
+          SANITIZED_TAG_NAME=$(echo $FULL_TAG_NAME | sed 's/[\/]/-/g') # Replace slashes with hyphens
+          mvn versions:set -DnewVersion=${SANITIZED_TAG_NAME}-SNAPSHOT
 
       - name: package
         run: mvn -B package --file pom.xml
