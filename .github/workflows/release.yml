@@ -13,7 +13,7 @@ jobs:
       - name: Prepare
         id: prepare
         run: |
-         VERSION = ${GITHUB_REF#refs/tags/release/} # Removes 'refs/tags/release/' prefix
+         echo "VERSION=${GITHUB_REF#refs/tags/release/}" >> GITHUB_ENV # Removes 'refs/tags/release/' prefix
       - name: Checkout
         id: checkout
         uses: actions/checkout@v4
@@ -27,7 +27,7 @@ jobs:
           settings-path: ${{ github.workspace }} # location for the settings.xml file
       - name: Set Version
         id: set_version
-        run: mvn versions:set -DnewVersion=${steps.prepare.VERSION}
+        run: mvn versions:set -DnewVersion=${VERSION}
       - name: Package
         id: package
         run: mvn -B package --file pom.xml
@@ -40,8 +40,8 @@ jobs:
         id: create_release
         uses: actions/create-release@v1
         with:
-          tag_name: ${{ steps.prepare.VERSION }}
-          release_name: Release ${{ steps.prepare.VERSION }}
+          tag_name: ${{ VERSION }}
+          release_name: Release ${{ VERSION }}
           body: |
             This is an automatically generated release.
           draft: false
