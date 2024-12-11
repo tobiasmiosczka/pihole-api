@@ -10,10 +10,16 @@ jobs:
       contents: write
       packages: write
     steps:
-      - name: Prepare
-        id: prepare
+      - name: Extract version from tag
+        id: extract_version
         run: |
-         echo "VERSION=${GITHUB_REF#refs/tags/release/}" >> GITHUB_ENV # Removes 'refs/tags/release/' prefix
+          if [[ "$GITHUB_REF" =~ refs/tags/release/([0-9]+\.[0-9]+\.[0-9]+) ]]; then
+            echo "VERSION=${BASH_REMATCH[1]}" >> $GITHUB_ENV
+            echo "Extracted Version: $VERSION"
+          else
+            echo "Tag name does not match expected format 'release/x.y.z'" >&2
+            exit 1
+          fi
       - name: Checkout
         id: checkout
         uses: actions/checkout@v4
