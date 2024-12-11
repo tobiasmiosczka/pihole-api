@@ -15,7 +15,7 @@ jobs:
         run: |
           if [[ "$GITHUB_REF" =~ refs/tags/release/([0-9]+\.[0-9]+\.[0-9]+) ]]; then
             echo "VERSION=${BASH_REMATCH[1]}" >> $GITHUB_ENV
-            echo "Extracted Version: $VERSION"
+            echo "Extracted Version: ${{ env.VERSION }}"
           else
             echo "Tag name does not match expected format 'release/x.y.z'" >&2
             exit 1
@@ -29,8 +29,8 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
-          server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
-          settings-path: ${{ github.workspace }} # location for the settings.xml file
+          server-id: github
+          settings-path: ${{ github.workspace }}
       - name: Set Version
         id: set_version
         run: mvn versions:set -DnewVersion=${VERSION}
